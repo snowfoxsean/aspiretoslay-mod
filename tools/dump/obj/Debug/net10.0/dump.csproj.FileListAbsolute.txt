@@ -1,0 +1,15 @@
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/bin/Debug/net10.0/dump
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/bin/Debug/net10.0/dump.deps.json
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/bin/Debug/net10.0/dump.runtimeconfig.json
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/bin/Debug/net10.0/dump.dll
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/bin/Debug/net10.0/dump.pdb
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.GeneratedMSBuildEditorConfig.editorconfig
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.AssemblyInfoInputs.cache
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.AssemblyInfo.cs
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.csproj.CoreCompileInputs.cache
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.sourcelink.json
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.dll
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/refint/dump.dll
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.pdb
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/dump.genruntimeconfig.cache
+/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/obj/Debug/net10.0/ref/dump.dll

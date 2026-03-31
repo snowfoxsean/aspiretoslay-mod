@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "3+dr0TUAd6E=",
+  "success": true,
+  "projectFilePath": "/Users/seanlu/Projects/aspiretoslay-mod/AspireToSlay.csproj",
+  "expectedPackageFiles": [
+    "/Users/seanlu/.nuget/packages/bepinex.assemblypublicizer.msbuild/0.4.3/bepinex.assemblypublicizer.msbuild.0.4.3.nupkg.sha512",
+    "/Users/seanlu/.nuget/packages/godot.sourcegenerators/4.5.1/godot.sourcegenerators.4.5.1.nupkg.sha512",
+    "/Users/seanlu/.nuget/packages/godotsharp/4.5.1/godotsharp.4.5.1.nupkg.sha512",
+    "/Users/seanlu/.nuget/packages/godotsharpeditor/4.5.1/godotsharpeditor.4.5.1.nupkg.sha512",
+    "/Users/seanlu/.nuget/packages/microsoft.netcore.app.ref/9.0.14/microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
+    "/Users/seanlu/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.14/microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}

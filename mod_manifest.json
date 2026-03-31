@@ -1,0 +1,7 @@
+{
+"pck_name": "AspireToSlay",
+"name": "AspireToSlay",
+"author": "AspireToSlay",
+"description": "Logs detailed run data and uploads it to aspire-to-slay for personal stats and analytics.",
+"version": "v0.1.0"
+}

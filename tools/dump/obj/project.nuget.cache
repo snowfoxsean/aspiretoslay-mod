@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "FODAuPYF+xE=",
+  "success": true,
+  "projectFilePath": "/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/dump.csproj",
+  "expectedPackageFiles": [
+    "/Users/seanlu/.nuget/packages/system.reflection.metadata/9.0.0/system.reflection.metadata.9.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference System.Reflection.Metadata will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/dump.csproj",
+      "warningLevel": 1,
+      "filePath": "/Users/seanlu/Projects/aspiretoslay/mod/tools/dump/dump.csproj",
+      "libraryId": "System.Reflection.Metadata",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

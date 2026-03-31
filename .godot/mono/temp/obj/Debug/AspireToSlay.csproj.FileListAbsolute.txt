@@ -1,0 +1,14 @@
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.csproj.AssemblyReference.cache
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.IgnoresAccessChecksTo.cs
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.GeneratedMSBuildEditorConfig.editorconfig
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.AssemblyInfoInputs.cache
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.AssemblyInfo.cs
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.csproj.CoreCompileInputs.cache
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.sourcelink.json
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/bin/Debug/AspireToSlay.deps.json
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/bin/Debug/AspireToSlay.dll
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/bin/Debug/AspireToSlay.pdb
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.dll
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/refint/AspireToSlay.dll
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/AspireToSlay.pdb
+/Users/seanlu/Projects/aspiretoslay-mod/.godot/mono/temp/obj/Debug/ref/AspireToSlay.dll

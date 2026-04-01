@@ -1,3 +1,4 @@
+using System.Reflection;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
@@ -16,32 +17,39 @@ internal static class ModInfoReadyPatch
     [HarmonyPostfix]
     public static void Postfix(NModInfoContainer __instance)
     {
-        if (__instance.GetNodeOrNull<Button>(ButtonNodeName) != null) return;
-
-        var btn = new Button
+        try
         {
-            Name              = ButtonNodeName,
-            Text              = "⚙ AspireToSlay Settings",
-            MouseFilter       = Control.MouseFilterEnum.Stop,
-            CustomMinimumSize = new Vector2(240, 40),
-            // Anchor to bottom-left so the button sits at the bottom of the panel
-            // regardless of the panel's actual height at _Ready time.
-            AnchorLeft        = 0f,
-            AnchorTop         = 1f,
-            AnchorRight       = 0f,
-            AnchorBottom      = 1f,
-            GrowHorizontal    = Control.GrowDirection.End,
-            GrowVertical      = Control.GrowDirection.Begin,
-            OffsetTop         = -48f,   // 40px height + 8px margin
-            OffsetBottom      = -8f,
-            OffsetLeft        = 8f,
-            OffsetRight       = 248f,   // 8 + 240
-        };
+            if (__instance.GetNodeOrNull<Button>(ButtonNodeName) != null) return;
 
-        btn.Pressed += () => TokenPopup.Show(__instance);
+            var btn = new Button
+            {
+                Name              = ButtonNodeName,
+                Text              = "⚙ AspireToSlay Settings",
+                MouseFilter       = Control.MouseFilterEnum.Stop,
+                CustomMinimumSize = new Vector2(240, 40),
+                // Anchor to bottom-left so the button sits at the bottom of the panel
+                // regardless of the panel's actual height at _Ready time.
+                AnchorLeft        = 0f,
+                AnchorTop         = 1f,
+                AnchorRight       = 0f,
+                AnchorBottom      = 1f,
+                GrowHorizontal    = Control.GrowDirection.End,
+                GrowVertical      = Control.GrowDirection.Begin,
+                OffsetTop         = -48f,   // 40px height + 8px margin
+                OffsetBottom      = -8f,
+                OffsetLeft        = 8f,
+                OffsetRight       = 248f,   // 8 + 240
+            };
 
-        __instance.AddChild(btn);
-        btn.Hide();
+            btn.Pressed += () => TokenPopup.Show(__instance);
+
+            __instance.AddChild(btn);
+            btn.Hide();
+        }
+        catch (Exception ex)
+        {
+            MainFile.Logger.Error($"[ModInfoReadyPatch] Failed to inject settings button: {ex}");
+        }
     }
 }
 
@@ -55,13 +63,78 @@ internal static class ModInfoFillPatch
     [HarmonyPostfix]
     public static void Postfix(NModInfoContainer __instance, Mod mod)
     {
-        var btn = __instance.GetNodeOrNull<Button>(ButtonNodeName);
-        if (btn == null) return;
+        try
+        {
+            var btn = __instance.GetNodeOrNull<Button>(ButtonNodeName);
+            if (btn == null) return;
 
-        bool isOurs = mod.state == ModLoadState.Loaded && mod.manifest?.id == ModConstants.ModId;
+            bool isOurs = IsOurMod(mod);
 
-        if (isOurs) btn.Show();
-        else        btn.Hide();
+            if (isOurs) btn.Show();
+            else        btn.Hide();
+        }
+        catch (Exception ex)
+        {
+            MainFile.Logger.Error($"[ModInfoFillPatch] Error in Postfix: {ex}");
+        }
+    }
+
+    /// <summary>
+    /// Determines whether <paramref name="mod"/> is the AspireToSlay mod.
+    /// Uses reflection to check the loaded-state so the code compiles against
+    /// any game version (the field was <c>bool wasLoaded</c> in older builds and
+    /// <c>ModLoadState state</c> in a brief newer build).
+    /// Identity check: <c>manifest.name</c> first, then <c>manifest.id</c> via
+    /// reflection (present on newer builds that use JSON-manifest loading).
+    /// </summary>
+    private static bool IsOurMod(Mod mod)
+    {
+        if (!IsModLoaded(mod)) return false;
+
+        var manifest = mod.manifest;
+        if (manifest == null) return false;
+
+        // `name` exists on all known game versions
+        if (manifest.name == ModConstants.ModId) return true;
+
+        // Fallback: check manifest.id via reflection (newer builds)
+        try
+        {
+            var idField = manifest.GetType().GetField("id");
+            if (idField != null && idField.GetValue(manifest) is string id && id == ModConstants.ModId)
+                return true;
+        }
+        catch { /* reflection failed — not our mod */ }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true when <paramref name="mod"/> was successfully loaded by the
+    /// game.  Handles both API shapes via reflection:
+    ///   • <c>bool wasLoaded</c>  (current stable build)
+    ///   • <c>ModLoadState state == Loaded</c>  (seen in a beta build)
+    /// </summary>
+    private static bool IsModLoaded(Mod mod)
+    {
+        var modType = mod.GetType();
+
+        // Try bool wasLoaded first (current stable)
+        var wasLoaded = modType.GetField("wasLoaded");
+        if (wasLoaded != null && wasLoaded.FieldType == typeof(bool))
+            return (bool)wasLoaded.GetValue(mod)!;
+
+        // Try enum state field (seen in beta)
+        var stateField = modType.GetField("state");
+        if (stateField != null && stateField.FieldType.IsEnum)
+        {
+            var val = Convert.ToInt32(stateField.GetValue(mod));
+            // ModLoadState.Loaded == 1
+            return val == 1;
+        }
+
+        // Unknown shape — assume loaded if manifest is present
+        return mod.manifest != null;
     }
 }
 

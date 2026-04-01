@@ -38,7 +38,7 @@ internal sealed class UploadManager : IDisposable
     /// Worker serialisation is now handled by a per-user DynamoDB lease, so
     /// the mod-side rate limit only needs to prevent hammering the ingest API.
     /// </summary>
-    private const int UploadIntervalMs = 50;
+    private const int UploadIntervalMs = 1100;
 
     /// <summary>
     /// Wall-clock time after which the next upload is permitted.

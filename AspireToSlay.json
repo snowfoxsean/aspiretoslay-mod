@@ -3,7 +3,7 @@
   "name": "AspireToSlay",
   "author": "snowfoxsean",
   "description": "Automatically upload and analyze your historical runs.\n\nWebsite:\nwww.AspireToSlay.com/GettingStarted\n\nConfigure your token in \"AspireToSlay Settings\" below:",
-  "version": "v0.8.0",
+  "version": "v0.9.1",
   "has_pck": false,
   "has_dll": true,
   "dependencies": [],

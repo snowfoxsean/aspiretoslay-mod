@@ -206,18 +206,32 @@ internal sealed class ApiClient : IDisposable
             req.Content.Headers.ContentType   = new MediaTypeHeaderValue("application/gzip");
             req.Content.Headers.ContentLength = length;
 
+            // Add any extra headers the backend tells us to send.
+            // Content-Type / Content-Length are already set on Content.Headers
+            // above, so skip those (TryAddWithoutValidation on the *request*
+            // headers silently drops them anyway).
             if (requiredHeaders is not null)
             {
                 foreach (var (k, v) in requiredHeaders)
-                    req.Headers.TryAddWithoutValidation(k, v);
+                {
+                    if (k.Equals("Content-Type", StringComparison.OrdinalIgnoreCase) ||
+                        k.Equals("Content-Length", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    if (!req.Headers.TryAddWithoutValidation(k, v))
+                        req.Content.Headers.TryAddWithoutValidation(k, v);
+                }
             }
+
+            MainFile.Logger.Info(
+                $"[ApiClient] S3 PUT {length:N0} bytes → {new Uri(presignedUrl).AbsolutePath}");
 
             using var resp = await _http.SendAsync(req, ct);
             if (!resp.IsSuccessStatusCode)
             {
                 var err = await resp.Content.ReadAsStringAsync(ct);
                 MainFile.Logger.Error(
-                    $"[ApiClient] S3 PUT {(int)resp.StatusCode}: {err[..Math.Min(200, err.Length)]}");
+                    $"[ApiClient] S3 PUT {(int)resp.StatusCode}: {err[..Math.Min(500, err.Length)]}");
                 return false;
             }
 

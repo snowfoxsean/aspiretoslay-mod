@@ -76,11 +76,11 @@ internal sealed class ApiClient : IDisposable
 
     private static readonly string MainBaseUrl =
         (Environment.GetEnvironmentVariable("ASPIRE_API_URL")
-         ?? "https://api.aspiretoslay.com").TrimEnd('/');
+         ?? "https://ingest.aspiretoslay.com").TrimEnd('/');
 
     private static readonly string BackupBaseUrl =
         (Environment.GetEnvironmentVariable("ASPIRE_BACKUP_API_URL")
-         ?? MainBaseUrl.Replace("api.aspiretoslay.com", "api-backup.aspiretoslay.com")).TrimEnd('/');
+         ?? MainBaseUrl.Replace("ingest.aspiretoslay.com", "ingest-backup.aspiretoslay.com")).TrimEnd('/');
 
     /// <summary>
     /// Tracks which URL to try next: false = main, true = backup.
@@ -119,7 +119,7 @@ internal sealed class ApiClient : IDisposable
         try
         {
             var body = JsonSerializer.Serialize(request, _json);
-            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/v1/upload-grants")
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/upload-grants")
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json"),
             };
@@ -156,7 +156,7 @@ internal sealed class ApiClient : IDisposable
         try
         {
             var body = JsonSerializer.Serialize(request, _json);
-            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/v1/upload-grants")
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/upload-grants")
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json"),
             };
@@ -233,7 +233,7 @@ internal sealed class ApiClient : IDisposable
     // ── Token refresh ──────────────────────────────────────────────────────
 
     /// <summary>
-    /// Attempts to refresh an expired mod token via POST /v1/tokens/refresh.
+    /// Attempts to refresh an expired mod token via POST /tokens/refresh.
     /// Returns the new token on success, or null on failure.
     /// </summary>
     public async Task<string?> RefreshTokenAsync(
@@ -242,7 +242,7 @@ internal sealed class ApiClient : IDisposable
     {
         try
         {
-            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/v1/tokens/refresh");
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{CurrentBaseUrl}/tokens/refresh");
             req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", expiredToken);
 
             using var resp = await _http.SendAsync(req, ct);
@@ -281,7 +281,7 @@ internal sealed class ApiClient : IDisposable
     {
         try
         {
-            using var req = new HttpRequestMessage(HttpMethod.Post, $"{MainBaseUrl}/v1/token-validation");
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{MainBaseUrl}/token-validation");
             req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", modToken);
 
             using var resp = await _http.SendAsync(req, ct);
@@ -321,7 +321,7 @@ internal sealed class ApiClient : IDisposable
             var body = JsonSerializer.Serialize(
                 new ModVersionRequest { Version = ModConstants.ModVersion }, _json);
 
-            using var req = new HttpRequestMessage(HttpMethod.Post, $"{MainBaseUrl}/v1/mod-version")
+            using var req = new HttpRequestMessage(HttpMethod.Post, $"{MainBaseUrl}/mod-version")
             {
                 Content = new StringContent(body, Encoding.UTF8, "application/json"),
             };

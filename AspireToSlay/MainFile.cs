@@ -121,7 +121,14 @@ public partial class MainFile : Node
         }
         // If no token, the MainMenuWarningPatch will show "token missing" automatically.
 
-        // ── 3. Scan and upload (unless blocked) ────────────────────────────
+        // ── 3. Refresh the warning label on the live main menu ────────────
+        // The NMainMenu._Ready patch fires when the scene loads, but startup
+        // checks are async — by the time they complete the main menu is already
+        // visible and _Ready has already run.  Calling RefreshWarning() here
+        // pushes the label into the live scene tree without waiting for _Ready.
+        MainMenuWarningPatch.RefreshWarning();
+
+        // ── 4. Scan and upload (unless blocked) ────────────────────────────
         if (!UploadsBlocked)
         {
             RunTracker.Instance.ScanAndUpload();

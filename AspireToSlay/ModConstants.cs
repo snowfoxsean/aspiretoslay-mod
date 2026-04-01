@@ -6,7 +6,7 @@ namespace AspireToSlay;
 internal static class ModConstants
 {
     public const string ModId = "AspireToSlay";
-    public const string ModVersion = "0.9.0";
+    public const string ModVersion = "0.9.1";
 
     // Token storage file name (inside the mod folder)
     public const string TokenFileName = "token.txt";

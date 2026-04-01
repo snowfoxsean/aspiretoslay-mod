@@ -68,6 +68,33 @@ internal static class MainMenuWarningPatch
     }
 
     /// <summary>
+    /// Pushes the current pending warning into the live scene tree without
+    /// waiting for NMainMenu._Ready to fire again.  Call this after async
+    /// startup checks complete so the label appears on the first load.
+    /// </summary>
+    public static void RefreshWarning()
+    {
+        var sceneTree = (Godot.SceneTree?)Engine.GetMainLoop();
+        if (sceneTree == null) return;
+        var mainMenu = FindNodeOfType<NMainMenu>(sceneTree.Root);
+        if (mainMenu == null || !GodotObject.IsInstanceValid(mainMenu)) return;
+
+        // Re-run the same label-injection logic as the Postfix
+        Postfix(mainMenu);
+    }
+
+    private static T? FindNodeOfType<T>(Node root) where T : Node
+    {
+        if (root is T match) return match;
+        foreach (var child in root.GetChildren())
+        {
+            var found = FindNodeOfType<T>(child);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    /// <summary>
     /// Returns the current pending priority (used by MainFile to decide
     /// whether uploads should be blocked).
     /// </summary>
